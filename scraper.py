@@ -1,4 +1,4 @@
-from constants import TARGET_URL
+from constants import TARGET_URL, TARGET_URL_BEGIN
 from requests import get
 from bs4 import BeautifulSoup
 import re
@@ -29,17 +29,27 @@ def scrape_data(url):
 
             tag_a = tag_td.find('a')
             city_code = tag_a.get_text()
-            city_url = tag_a.attrs['href']
+            city_url = TARGET_URL_BEGIN + tag_a.attrs['href']
 
             tag_td = tag_tr.find('td', {'class': 'overflow_name'})
             city_name = tag_td.get_text()
 
-            data.append({
+            # Basic info
+            city_dict = {
                 'code': city_code,
                 'location': city_name
-            })
+            }
+
+            # Scraping city results
+            html_doc = get_html_doc(city_url)
+            city_dict['registered'] = html_doc.find('td', {'headers': 'sa2'}).get_text()
+            city_dict['envelopes'] = html_doc.find('td', {'headers': 'sa3'}).get_text()
+            city_dict['valid'] = html_doc.find('td', {'headers': 'sa6'}).get_text()
+
+            data.append(city_dict)
 
         if i > 10:
+            # process only few of them (during dev)
             break
 
     return data
