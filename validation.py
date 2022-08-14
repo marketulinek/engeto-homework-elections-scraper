@@ -1,4 +1,4 @@
-from constants import ALLOWED_OUTPUT_FILE_EXTENSIONS, TARGET_URL
+from constants import ALLOWED_OUTPUT_FILE_EXTENSIONS
 from scraper import get_list_of_available_urls
 
 
@@ -18,10 +18,7 @@ def validate_given_url(url):
 
     urls_list = get_list_of_available_urls()
 
-    parts_of_url = TARGET_URL.split('/')
-    start_of_url = TARGET_URL[ : -(len(parts_of_url[-1]))]
-
-    if url[len(start_of_url) : ] not in urls_list:
+    if url not in urls_list:
         print('Given invalid url.')
         quit()
 
