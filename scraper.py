@@ -40,15 +40,28 @@ def scrape_data(url):
                 'location': city_name
             }
 
-            # Scraping city results
             html_doc = get_html_doc(city_url)
             city_dict['registered'] = html_doc.find('td', {'headers': 'sa2'}).get_text()
             city_dict['envelopes'] = html_doc.find('td', {'headers': 'sa3'}).get_text()
             city_dict['valid'] = html_doc.find('td', {'headers': 'sa6'}).get_text()
 
+            # Election results
+            tds_tag = html_doc.find_all('td', {'class': ['overflow_name', 'cislo'], 'headers': ['t1sb2', 't1sb3', 't2sb2', 't2sb3']})
+
+            party_name = ''
+            for td_tag in tds_tag:
+
+                if 'overflow_name' in td_tag.attrs['class']:
+                    party_name = td_tag.get_text() # saving for next iteration
+                    continue
+
+                if 'cislo' in td_tag.attrs['class']:
+                    city_dict[party_name] = td_tag.get_text()
+                    party_name = '' # clearing name
+
             data.append(city_dict)
 
-        if i > 10:
+        if i > 1:
             # process only few of them (during dev)
             break
 
