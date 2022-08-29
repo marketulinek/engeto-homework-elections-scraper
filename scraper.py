@@ -17,15 +17,15 @@ def get_list_of_available_urls():
 
 def scrape_data(url):
     
+    print('DOWNLOADING DATA FROM URL:', url)
+
     data = []
     tags_tr = get_html_doc(url).find_all('tr')
     
-    i = 0
     for tag_tr in tags_tr:
         tag_td = tag_tr.find('td', {'class': 'cislo'})
 
         if tag_td:
-            i = i + 1
 
             tag_a = tag_td.find('a')
             city_code = tag_a.get_text()
@@ -60,10 +60,6 @@ def scrape_data(url):
                     party_name = '' # clearing name
 
             data.append(city_dict)
-
-        if i > 1:
-            # process only few of them (during dev)
-            break
 
     return data
 
