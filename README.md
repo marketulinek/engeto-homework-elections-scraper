@@ -21,10 +21,10 @@ Second argument: ``` vysledky_prostejov.csv ```
 
 Running the command:
 ```
-python main.py 'https://volby.cz/pls/ps2017nss/ps32?xjazyk=CZ&xkraj=12&xnumnuts=7103' vysledky_prostejov.csv
+python main.py 'https://volby.cz/pls/ps2017nss/ps32?xjazyk=CZ&xkraj=12&xnumnuts=7103' 'vysledky_prostejov.csv'
 ```
 
-Download progess:
+Download progress:
 ```
 DOWNLOADING DATA FROM URL: https://volby.cz/pls/ps2017nss/ps32?xjazyk=CZ&xkraj=12&xnumnuts=7103
 SAVING TO FILE: vysledky_prostejov.csv
