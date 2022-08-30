@@ -33,5 +33,3 @@ def validate_given_filename(filename):
     if extension not in ALLOWED_OUTPUT_FILE_EXTENSIONS:
         print('The given file name for the output has wrong extension. Allowed extensions: %s.' % ', '.join(ALLOWED_OUTPUT_FILE_EXTENSIONS))
         quit()
-    
-    return filename
